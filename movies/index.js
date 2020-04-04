@@ -34,6 +34,7 @@ const onInput = async event => {
   
   resultsWrapper.innerHTML = '';
   dropdown.classList.add('is-active')
+ 
   for (let movie of movies) {
     const option = document.createElement('a');
     const imgSrc = movie.Poster === 'N/A' ? '' : movie.Poster;   
@@ -62,3 +63,9 @@ const onInput = async event => {
 // }
 
 input.addEventListener('input', debounce(onInput, 1000));
+
+document.addEventListener('click', event => {
+  if (!root.contains(event.target)) {
+    dropdown.classList.remove('is-active');
+  }
+});
