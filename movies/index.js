@@ -6,10 +6,6 @@ const autocompleteConfig = {
       ${movie.Title} (${movie.Year})
     `;
   },
-  onOptionSelect(movie) {
-    document.querySelector('.tutorial').classList.add('is-hidden');
-    onMovieSelect(movie);
-  },
   inputValue(movie) {
     return movie.Title;
   },
@@ -32,14 +28,22 @@ const autocompleteConfig = {
 createAutoComplete({
   ...autocompleteConfig,
   root: document.querySelector('#left-autocomplete'),
+  onOptionSelect(movie) {
+    document.querySelector('.tutorial').classList.add('is-hidden');
+    onMovieSelect(movie, document.querySelector('#left-summary'));
+  },
 })
 
 createAutoComplete({
   ...autocompleteConfig,
   root: document.querySelector('#right-autocomplete'),
+  onOptionSelect(movie) {
+    document.querySelector('.tutorial').classList.add('is-hidden');
+    onMovieSelect(movie, document.querySelector('#right-summary'));
+  },
 })
 
-onMovieSelect = async movie => {
+onMovieSelect = async (movie, summaryElement) => {
   const response = await axios.get('http://www.omdbapi.com/', {
     params: {
       apiKey: API_KEY,
@@ -47,7 +51,7 @@ onMovieSelect = async movie => {
     }
   });
 
-  document.querySelector('#summary').innerHTML = movieTemplate(response.data);
+  summaryElement.innerHTML = movieTemplate(response.data);
 }
 
 const movieTemplate = movieDetail => {
@@ -67,23 +71,23 @@ const movieTemplate = movieDetail => {
       </div>
     </article>
     <article class="notification is-primary">
-      <p class="">${movieDetail.Avards}</p>
+      <p class="title">${movieDetail.Awards}</p>
       <p class="subtitle">Avards</p>
     </article>
     <article class="notification is-primary">
-      <p class="">${movieDetail.BoxOffice}</p>
+      <p class="title">${movieDetail.BoxOffice}</p>
       <p class="subtitle">Box Office</p>
     </article>
     <article class="notification is-primary">
-      <p class="">${movieDetail.Metascore}</p>
+      <p class="title">${movieDetail.Metascore}</p>
       <p class="subtitle">Metascore</p>
     </article>
     <article class="notification is-primary">
-      <p class="">${movieDetail.imdbRating}</p>
+      <p class="title">${movieDetail.imdbRating}</p>
       <p class="subtitle">IMDB Rating</p>
     </article>
     <article class="notification is-primary">
-      <p class="">${movieDetail.imdbVotes}</p>
+      <p class="title">${movieDetail.imdbVotes}</p>
       <p class="subtitle">IMDB Votes</p>
     </article>
   `;
