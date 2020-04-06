@@ -16,7 +16,7 @@ const render = Render.create({
   element: document.body,
   engine: engine,
   options: {
-    wireframes: true,
+    wireframes: false,
     width,
     height
   }
@@ -127,15 +127,18 @@ horizontals.forEach((row, rowIndex) => {
       5,
       {
         label: 'wall',
-        isStatic: true
+        isStatic: true,
+        render: {
+          fillStyle: 'red'
+        }
       }
-    );
-    World.add(world, wall);
+      );
+      World.add(world, wall);
+    });
   });
-});
-
-verticals.forEach((row, rowIndex) => {
-  row.forEach((open, columnIndex) => {
+  
+  verticals.forEach((row, rowIndex) => {
+    row.forEach((open, columnIndex) => {
     if (open) {
       return;
     }
@@ -147,9 +150,12 @@ verticals.forEach((row, rowIndex) => {
       unitLengthY, 
       {
         label: 'wall',
-        isStatic: true
+        isStatic: true,
+        render: {
+          fillStyle: 'red'
+        }
       }
-    );
+      );
     World.add(world, wall);
   });
 });
@@ -163,21 +169,27 @@ const goal = Bodies.rectangle(
   unitLengthY * .7,
   {
     isStatic: true,
-    label: 'goal'
+    label: 'goal',
+    render: {
+      fillStyle: 'green'
+    }
   }
   )
-World.add(world, goal);
-
-//Ball
-
-const ballRadius = Math.min(unitLengthX, unitLengthY) / 4;
-const ball = Bodies.circle(
-  unitLengthX / 2,
-  unitLengthY / 2,
-  ballRadius,
-  {
-    label: 'ball'
-  }
+  World.add(world, goal);
+  
+  //Ball
+  
+  const ballRadius = Math.min(unitLengthX, unitLengthY) / 4;
+  const ball = Bodies.circle(
+    unitLengthX / 2,
+    unitLengthY / 2,
+    ballRadius,
+    {
+      label: 'ball',
+      render: {
+        fillStyle: 'purple'
+      }
+    }
 );
 World.add(world, ball);
 
