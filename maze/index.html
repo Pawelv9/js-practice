@@ -11,10 +11,32 @@
     ::-webkit-scrollbar {
       display: none;
     }
+
+    .hidden {
+      display: none !important;
+    }
+
+    h1 {
+      color: blueviolet;
+      font-size: 70px;
+    }
+
+    .victory {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: absolute;
+      z-index: 1;
+      height: 100vh;
+      width: 100vw;
+    }
   </style>
 </head>
 
 <body>
+  <div class="victory hidden">
+    <h1>Victory!</h1>
+  </div>
   <script src="index.js"></script>
 </body>
 
